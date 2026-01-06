@@ -1,0 +1,522 @@
+/* Общие настройки */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+/* Стилизация формы */
+.styled-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    /* Это позволит полям вставать друг под друга на узких экранах */
+}
+
+.form-group input {
+    flex: 1;
+    /* Поля будут растягиваться */
+    min-width: 150px;
+    /* Если место меньше 150px, поле перепрыгнет на новую строку */
+}
+
+
+input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: #4a90e2;
+}
+
+label {
+    text-align: left;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: -10px;
+}
+
+/* Кнопки */
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, background 0.3s;
+}
+
+#addBtn {
+    background: #4a90e2;
+    color: white;
+}
+
+#addBtn:hover {
+    background: #357abd;
+    transform: translateY(-2px);
+}
+
+#searchBtn:hover {
+    background: #e68a00 !important;
+    transform: translateY(-2px);
+}
+
+#resetBtn:hover {
+    background: #606568 !important;
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Чтобы кнопки в один ряд смотрелись аккуратно */
+.form-actions button {
+    flex: 1;
+    /* Кнопки Добавить и Найти будут одинаковой ширины */
+    font-size: 14px;
+    padding: 10px 5px;
+}
+
+
+.secondary-btn {
+    margin-top: 20px;
+    background: #6c757d;
+    color: white;
+    width: 100%;
+}
+
+.secondary-btn:hover {
+    background: #5a6268;
+
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    position: absolute;
+    background: white;
+    width: 80%;
+    max-width: 95%;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+
+    /* Добавляем возможность изменения размера */
+    resize: both;
+    /* Позволяет менять размер и по горизонтали, и по вертикали */
+    overflow: auto;
+    /* Обязательно для работы resize */
+    min-width: 400px;
+    /* Минимальная ширина */
+    min-height: 300px;
+    /* Минимальная высота */
+}
+
+/* Настройка внешнего вида "уголка" (в некоторых браузерах) */
+.modal-content::-webkit-resizer {
+    background-color: #4a90e2;
+    border-radius: 10px;
+}
+
+
+/* Шапка окна (за которую двигаем) */
+#modalHeader {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    cursor: move;
+    /* Курсор перетаскивания */
+    user-select: none;
+}
+
+#closeModalBtn {
+    background: #ff4d4d;
+    color: white;
+    padding: 5px 10px;
+    font-size: 18px;
+}
+
+/* Таблица */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Включает горизонтальный скролл только для таблицы */
+    -webkit-overflow-scrolling: touch; /* Плавный скролл на iPhone */
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+table {
+    width: 100%;
+    min-width: 700px; /* Важно! Таблица не будет сжиматься меньше этого, появится скролл */
+    border-collapse: collapse;
+    background: white;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 13px;
+}
+
+/* Делаем имя и фамилию (первые две колонки) крупнее и жирнее */
+table td:nth-child(2),
+table td:nth-child(3) {
+    font-weight: bold;
+    /* Жирный шрифт */
+    font-size: 15px;
+    /* Размер чуть больше стандартного (был 13px) */
+    color: #333;
+    /* Темно-серый цвет для контраста */
+}
+
+/* Также сделаем заголовки этих колонок чуть заметнее */
+table th:nth-child(2),
+table th:nth-child(3) {
+    letter-spacing: 0.5px;
+    /* Небольшой отступ между буквами */
+    font-size: 18px;
+    /* text-transform: uppercase;  */
+}
+
+
+
+th {
+    background: #4a90e2;
+    color: white;
+}
+
+tr:hover {
+    background: #f1f7ff;
+}
+
+.del-btn {
+    background: #dc3545;
+    color: white;
+    padding: 5px 8px;
+    font-size: 11px;
+}
+
+/* Основная панель в углу (ПК) */
+/* Маленькая капсула в углу */
+.admin-top-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    left: auto;
+    /* Важно: отменяем левую привязку */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 250px;
+    background: white;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #4a90e2;
+    z-index: 9999;
+
+    /* Плавность для всех изменений */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+
+.admin-info {
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+    border-bottom: 1px solid #eee;
+    /* Линия под именем для разделения */
+    padding-bottom: 5px;
+    width: 100%;
+    text-align: center;
+
+    white-space: nowrap;
+    /* Запрещаем перенос на вторую строку */
+    overflow: hidden;
+    /* Прячем то, что не влезло */
+    text-overflow: ellipsis;
+    /* Рисуем три точки (...) в конце */
+    display: block;
+}
+
+/* Нужно для корректной работы эффекта */
+
+
+.admin-actions {
+    display: flex;
+    flex-direction: row;
+    /* Кнопки остаются в ряд друг с другом */
+    gap: 5px;
+}
+
+/* Кнопки делаем маленькими и аккуратными */
+.admin-actions button {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+#logoutBtn {
+    background: #e74c3c;
+    color: white;
+}
+
+#changeAdminBtn {
+    background: #6c757d;
+    color: white;
+}
+
+/* ПЕРВЫЙ ШАГ ПЕРЕХОДА: 1060px */
+/* ПЕРВЫЙ ШАГ ПЕРЕХОДА: 1060px (с увеличенной высотой) */
+
+/* ВТОРОЙ ШАГ ПЕРЕХОДА: 600px (Мобильный вид) */
+
+
+
+
+/* ============================================================
+   АДАПТИВНЫЙ РЕЖИМ: 900px и меньше (Версия 2026)
+   ============================================================ */
+@media screen and (max-width: 900px) {
+    
+    /* 1. СТАБИЛИЗАЦИЯ И СЛОИ */
+    body {
+        padding-top: 150px !important; /* Отступ под высокую панель админа */
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* АДМИН-ПАНЕЛЬ: Слой ниже модального окна */
+    .admin-top-panel {
+        position: fixed;
+        top: 10px;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 92% !important;
+        max-width: 500px;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px;
+        padding: 15px !important;
+        background: #ffffff !important;
+        border-radius: 20px !important;
+        border: 2px solid #4a90e2 !important;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        z-index: 1000 !important; /* НИЖЕ модального окна */
+        box-sizing: border-box;
+    }
+
+    .admin-info {
+        width: 100%;
+        text-align: center !important;
+        font-size: 16px !important;
+        font-weight: bold;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 8px;
+        margin: 0;
+    }
+
+    .admin-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    /* 2. ПЕРЕКЛЮЧАТЕЛИ КОЛОНОК (Теперь в виде кнопок) */
+  .column-toggle {
+        display: flex !important;
+        flex-wrap: nowrap !important; /* Строго в один ряд */
+        justify-content: center !important;
+        gap: 4px !important; /* Минимальный зазор */
+        width: 100% !important;
+        max-width: 500px;
+        margin: 0 auto 15px auto;
+        padding: 0 5px !important;
+    }
+
+    .column-toggle label {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 auto !important; /* Равномерно распределяем место */
+        
+        height: 30px; /* Еще ниже */
+        padding: 0 4px !important; /* Почти убираем боковые отступы */
+        font-size: 9px !important; /* Маленький, но читаемый шрифт */
+        letter-spacing: -0.2px; /* Сближаем буквы */
+        
+        background: white;
+        border: 1px solid #4a90e2;
+        border-radius: 6px;
+        color: #4a90e2;
+        text-transform: uppercase;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    /* ЖЕСТКО СКРЫВАЕМ ЧЕКБОКСЫ */
+    .column-toggle input[type="checkbox"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .column-toggle label:has(input:checked) {
+        background: #4a90e2 !important;
+        color: white !important;
+    }
+  
+    
+
+    /* 3. МОДАЛЬНОЕ ОКНО (Выше админ-панели) */
+    .modal {
+        z-index: 9999 !important;
+    }
+
+    .modal-content {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        width: 100% !important;
+        height: 100dvh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        z-index: 10000 !important; /* САМЫЙ ВЕРХНИЙ СЛОЙ */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* 4. КАРТОЧКИ ТАБЛИЦЫ */
+    #peopleTable thead {
+        display: none !important;
+    }
+ #peopleTable tbody {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #peopleTable tr {
+        display: flex !important;
+        /* Используем min-width 0, чтобы flex-контейнер мог сжиматься */
+        min-width: 0 !important; 
+        width: 95% !important; /* Оставляем крошечный зазор по краям */
+        max-width: 500px !important;
+        margin: 0 auto 15px auto !important;
+        box-sizing: border-box !important;
+        overflow: hidden; /* Обрезаем всё, что вылазит */
+    }
+
+    #peopleTable td {
+        display: flex !important;
+        width: 100% !important;
+        min-width: 0 !important; /* Позволяет ячейке сжиматься */
+        box-sizing: border-box !important;
+        padding: 8px 10px !important;
+    }
+
+    /* Подписи полей тоже чуть меньше, чтобы данные не выталкивали карточку */
+    #peopleTable td::before {
+        width: 80px !important; /* Уменьшили со 100px */
+        min-width: 80px !important;
+        font-size: 9px !important;
+        margin-right: 8px !important;
+    }
+
+    #peopleTable td span, #peopleTable td {
+        font-size: 13px !important;
+        overflow: hidden;
+        text-overflow: ellipsis; /* Если текст всё равно длинный — ставим точки */
+    }
+
+    /* Чекбокс выбора записи (в углу) */
+    #peopleTable td:first-child {
+        position: absolute !important;
+        top: 15px;
+        right: 15px;
+        width: auto !important;
+        border: none !important;
+    }
+
+    #peopleTable td:first-child::before,
+    #peopleTable td:last-child::before {
+        display: none !important;
+    }
+
+    .del-btn {
+        width: 100% !important;
+        height: 48px !important;
+        border-radius: 12px !important;
+    }
+}
+
+/* Для совсем узких экранов (2 кнопки в ряд) */
+@media screen and (max-width: 400px) {
+    .column-toggle {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
