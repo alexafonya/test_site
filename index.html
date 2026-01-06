@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living Israel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/script.js" defer></script>
+
+
+</head>
+
+<body>
+    <div class="admin-top-panel">
+        <div class="admin-info">
+            👤 Админ: <span id="currentAdminName">...</span>
+        </div>
+        <div class="admin-actions">
+            <button id="changeAdminBtn">⚙️ Профиль</button>
+            <button id="logoutBtn">Выход 🚪</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <h1>Регистрация пользователей</h1>
+
+        <!-- Форма со всеми вашими полями -->
+        <form id="personForm" class="styled-form">
+            <div class="form-group">
+                <input type="text" id="firstName" placeholder="Имя" required>
+                <input type="text" id="lastName" placeholder="Фамилия" required>
+            </div>
+
+            <div class="form-group">
+                <label for="birthDate">Дата рождения:</label>
+                <input type="date" id="birthDate" required>
+            </div>
+
+            <input type="text" id="city" placeholder="Город" required>
+            <input type="text" id="address" placeholder="Адрес" required>
+            <input type="tel" id="phone" placeholder="Телефон" required>
+
+            <!-- Внутри <form id="personForm"> -->
+            <!-- Внутри <form id="personForm"> в блоке управления кнопками -->
+            <div class="form-actions" style="display: flex; gap: 10px; margin-top: 10px;">
+                <button type="submit" id="addBtn">Добавить</button>
+                <button type="button" id="searchBtn" style="background: #ff9800;">Найти</button>
+                <!-- Кнопка сброса -->
+                <button type="reset" id="resetBtn" style="background: #9ba0a5; flex: 0.5;">Сброс</button>
+            </div>
+        </form>
+
+        <!-- Кнопка для вызова окна с таблицей -->
+        <button id="openModalBtn" class="secondary-btn">Открыть таблицу данных</button>
+    </div>
+
+    <!-- Модальное окно (скрыто по умолчанию) -->
+    <div id="myModal" class="modal">
+        <div class="modal-content" id="draggableWindow">
+            <div class="table-controls" style="padding: 10px; display: flex; gap: 10px;">
+                <button id="downloadPdfBtn" style="background: #e74c3c; color: white; flex: 1;">Скачать PDF</button>
+                <button id="printBtn" style="background: #34495e; color: white; flex: 1;">Распечатать</button>
+            </div>
+            <div class="pdf-settings" style="margin: 10px 0; padding: 10px; background: #f1f3f5; border-radius: 8px;">
+                <span style="font-size: 13px; font-weight: bold; margin-right: 10px;">Ориентация PDF:</span>
+                <label style="font-size: 13px; cursor: pointer;">
+                    <input type="radio" name="pdfOrientation" value="portrait" checked> Портрет (вертикально)
+                </label>
+                <label style="font-size: 13px; cursor: pointer; margin-left: 10px;">
+                    <input type="radio" name="pdfOrientation" value="landscape"> Альбом (горизонтально)
+                </label>
+            </div>
+
+
+            <div id="modalHeader">
+                <span>Прихожане церкви</span>
+                <button id="closeModalBtn">&times;</button>
+            </div>
+
+            <!-- ПАНЕЛЬ ЧЕКБОКСОВ ПОД ШАПКОЙ -->
+            <div class="column-toggle">
+                <span class="toggle-title">Отображать:</span>
+                <label><input type="checkbox" checked data-column="1"><span>Имя</span></label>
+                <label><input type="checkbox" checked data-column="2"><span>Фамилия</span></label>
+                <label><input type="checkbox" checked data-column="3"><span>Д/Р</span></label>
+                <label><input type="checkbox" checked data-column="4"><span>Город</span></label>
+                <label><input type="checkbox" checked data-column="5"><span>Адрес</span></label>
+                <label><input type="checkbox" checked data-column="6"><span>Телефон</span></label>
+            </div>
+
+            <!-- Внутри modal-content, после блока column-toggle -->
+            <div class="modal-search" style="padding: 10px 20px; background: white;">
+                <input type="text" id="modalSearchInput" placeholder="Быстрый поиск по таблице..."
+                    style="width: 100%; padding: 10px; border: 1px solid #4a90e2; border-radius: 8px;">
+            </div>
+
+            <div class="table-wrapper">
+                <table id="peopleTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAll"></th> <!-- Чекбокс "Выбрать всех" -->
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Дата рождения</th>
+                            <th>Город</th>
+                            <th>Адрес</th>
+                            <th>Телефон</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Сюда данные добавит JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
