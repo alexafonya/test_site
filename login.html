@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в систему</title>
+    <!-- Важно для мобильных устройств -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            /* Используем dvh, чтобы на мобильных клавиатура не обрезала экран */
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px; /* Отступ, чтобы карточка не липла к краям */
+            box-sizing: border-box;
+            color: white;
+        }
+
+        .login-card {
+            width: 100%;
+            /* Карточка будет 340px, но на маленьких экранах сузится */
+            max-width: 360px;
+            /* Гибкая высота */
+            min-height: 500px;
+            
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            
+            padding: 40px 30px;
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        h2 {
+            font-size: clamp(20px, 5vw, 24px); /* Адаптивный размер шрифта */
+            font-weight: 300;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin: 0 0 30px 0;
+            text-align: center;
+        }
+
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Зазор между инпутами */
+            flex-grow: 1; /* Растягивается, чтобы занять свободное место */
+            justify-content: center;
+        }
+
+        input {
+            width: 100%;
+            height: 55px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            color: white;
+            font-size: 16px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #00f2fe;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
+        button {
+            width: 100%;
+            height: 55px;
+            margin-top: 25px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 18px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.3);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .back-link:hover {
+            color: #00f2fe;
+        }
+
+        /* Адаптация для мобильных устройств в горизонтальном режиме или очень маленьких экранов */
+        @media screen and (max-height: 580px) {
+            .login-card {
+                min-height: auto;
+                padding: 25px 20px;
+                border-radius: 25px;
+            }
+            h2 { margin-bottom: 15px; }
+            .back-link { margin-top: 15px; }
+        }
+
+        @media screen and (max-width: 360px) {
+            .login-card {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>Вход</h2>
+        
+        <div class="form-wrapper">
+            <input type="text" id="log" placeholder="Логин" autocomplete="username">
+            <input type="password" id="pwd" placeholder="Пароль" autocomplete="current-password">
+            <button onclick="auth()">Войти</button>
+        </div>
+
+        <a href="#" class="back-link">Забыли пароль?</a>
+    </div>
+
+    <script>
+        async function auth() {
+            const login = document.getElementById('log').value;
+            const pass = document.getElementById('pwd').value;
+
+            if(!login || !pass) {
+                alert("Заполните все поля");
+                return;
+            }
+
+           const response = await fetch('/admin-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ login, pass })
+    });
+
+    const result = await response.json();
+    if (result.success) {
+        sessionStorage.setItem('isAdmin', 'true');
+        sessionStorage.setItem('currentAdmin', login);
+        window.location.href = "index.html"; 
+    } else {
+        alert("Неверный логин или пароль!");
+    }
+        }
+    </script>
+</body>
+</html>
